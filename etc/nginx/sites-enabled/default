@@ -1,0 +1,34 @@
+server {
+    listen       80 default_server;
+    server_name  _;
+
+    auth_basic "Auth Required";
+    auth_basic_user_file /etc/nginx/htpasswd;
+
+    # Proxy pass to /servers/\d with json
+    location ~* ^/servers/(\d*)/?$ {
+        proxy_pass http://servers-api.va.3sca.net/servers/$1.json;
+        proxy_cache cachezone;
+        proxy_cache_valid  200 302 60m;
+        proxy_cache_valid  301     24h;
+        proxy_cache_valid  any      1m;
+    }
+
+    # Proxy pass to /servers/
+    location /servers/ {
+        proxy_pass  http://servers-api.va.3sca.net/servers/;
+        proxy_cache cachezone;
+        proxy_cache_valid  200 302 60m;
+        proxy_cache_valid  301     24h;
+        proxy_cache_valid  any      1m;
+    }
+
+    # Proxy pass to /datacenters/
+    location /datacenters/ {
+        proxy_pass  http://datacenters-api.va.3sca.net/datacenters/;
+        proxy_cache cachezone;
+        proxy_cache_valid  200 302 60m;
+        proxy_cache_valid  301     24h;
+        proxy_cache_valid  any      1m;
+    }
+}

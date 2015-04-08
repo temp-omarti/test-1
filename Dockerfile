@@ -14,8 +14,15 @@ apt-get install -y nginx
 # Cleaning caches
 RUN rm -rf /var/lib/apt/lists/* && \
 sudo apt-get clean
-RUN echo 'Hello, I am docker nginx' > /usr/share/nginx/html/index.html 
+
+#Creating nginx cache directories
+RUN mkdir -p /usr/share/nginx/cache/tmp
+
+# Configuring nginx
 RUN echo "\ndaemon off;" >> /etc/nginx/nginx.conf
+COPY etc/nginx/htpasswd /etc/nginx/htpasswd
+COPY etc/nginx/sites-enabled/default /etc/nginx/sites-enabled/default 
+COPY etc/nginx/conf.d/cachezone.conf /etc/nginx/conf.d/cachezone.conf
 
 # Run nginx on docker run
 CMD ["/usr/sbin/nginx", "-c", "/etc/nginx/nginx.conf"]
