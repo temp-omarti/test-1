@@ -6,6 +6,7 @@ git clone https://github.com/temp-omarti/test-1.git
 ```
 When you have the repo locally build the image
 ```
+cd test-1
 docker build -t nginx_test .
 ```
 And run it! :)
@@ -18,4 +19,5 @@ docker ps -l
 # take the name, for example reverent_poincare and look at the assignated port
 docker port reverent_poincare
 ```
-With this you can start doing requests to your API.
+With this port and the IP you can start doing requests to your API.
+http://$IP:$port
