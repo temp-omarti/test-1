@@ -43,8 +43,14 @@ def get_datacenters(url, username, password):
         return None
 
 # Given a server id returns the server info
-def get_server(url, server, username, password):
-    url = url + SERVERS_PATH + server
+def get_server(servers, server_id):
+    for server in servers:
+        if str(server['id']) == server_id:
+            return server
+
+# Get all the servers info
+def get_all_servers(url, username, password):
+    url = url + SERVERS_PATH 
     result = get_auth_url(url, username, password)
     if result:
         return json.load(result)
@@ -69,16 +75,17 @@ def main():
     username = get_arg_username(parser)
 
     datacenters = get_datacenters(url, username, password)
+    servers = get_all_servers(url, username, password)
     for datacenter in datacenters:
         print "***************************************"
         print '- Datacenter: ' + datacenter['name']
         print '- Servers:'
-        for server_text in datacenter['servers'].split(','):
-            server = get_server(url, server_text, username, password)
+        for server_id in datacenter['servers'].split(','):
+            server = get_server(servers, server_id)
             if server:
                 print '- ' + server['name'] + ": " + server['description']
             else:
-                print 'The server with the id ' + server_text + ' does not exist'
+                print 'The server with the id ' + server_id + ' does not exist'
 
 if __name__ == "__main__":
     main()
