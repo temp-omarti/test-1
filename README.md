@@ -21,3 +21,25 @@ docker port reverent_poincare
 ```
 With this port and the IP you can start doing requests to your API.
 http://$IP:$port
+
+The URL is protected by basic auth, the user/password is test/test
+
+## Testing with the api_requester script ##
+```
+usage: api_requester.py [-h] [-r URL] [-p PASSWORD] [-u USERNAME]
+
+optional arguments:
+  -h, --help   show this help message and exit
+  -r URL       Url of the API - default value http://localhost/
+  -p PASSWORD  Password of the basic auth user - default: test
+  -u USERNAME  Username of the basic auth - default: test
+```
+
+Send the api_requester.py with the parameters, if you have mapped by
+default the 80 docker port the port won't be 80, if, for example, it's
+the 49153 an usage example will be:
+```
+python api_requester.py -r http://localhost:49153/ -p test -u test
+```
+
+Enjoy ;)
