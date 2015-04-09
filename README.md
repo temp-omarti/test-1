@@ -35,9 +35,9 @@ optional arguments:
   -u USERNAME  Username of the basic auth - default: test
 ```
 
-Send the api_requester.py with the parameters, if you have mapped by
-default the 80 docker port the port won't be 80, if, for example, it's
-the 49153 an usage example will be:
+Run the api_requester.py script with the parameters, if you have ran
+docker like the example the port on the local machine won't be 80
+, if for example, it's the 49153 an usage example will be:
 ```
 python api_requester.py -r http://localhost:49153/ -p test -u test
 ```
