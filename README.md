@@ -41,5 +41,7 @@ docker like the example the port on the local machine won't be 80
 ```
 python api_requester.py -r http://localhost:49153/ -p test -u test
 ```
+The api_requester script has been optimized to only do a request to 
+get all the servers and not doing one request for every server
 
 Enjoy ;)
