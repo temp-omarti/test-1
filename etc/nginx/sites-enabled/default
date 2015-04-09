@@ -23,8 +23,26 @@ server {
         proxy_cache_valid  any      1m;
     }
 
+    # We don't want nginx doing 301 redirects on /servers
+    location = /servers {
+        proxy_pass  http://servers-api.va.3sca.net/servers;
+        proxy_cache cachezone;
+        proxy_cache_valid  200 302 60m;
+        proxy_cache_valid  301     24h;
+        proxy_cache_valid  any      1m;
+    }
+
     # Proxy pass to /datacenters/
     location /datacenters/ {
+        proxy_pass  http://datacenters-api.va.3sca.net/datacenters/;
+        proxy_cache cachezone;
+        proxy_cache_valid  200 302 60m;
+        proxy_cache_valid  301     24h;
+        proxy_cache_valid  any      1m;
+    }
+
+    # We don't want nginx doing 301 redirects on /datacenters
+    location = /datacenters {
         proxy_pass  http://datacenters-api.va.3sca.net/datacenters/;
         proxy_cache cachezone;
         proxy_cache_valid  200 302 60m;
